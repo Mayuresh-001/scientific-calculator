@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Scientific Calculator & Grapher</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H7v-2h5v2zm5-4H7v-2h10v2zm0-4H7V7h10v2z'/></svg>">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="app-header">
+      <!-- History Button (left) -->
+      <button id="historyToggleBtn" class="header-btn" title="Calculation History" aria-label="Calculation History">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <polyline points="12 7 12 12 9 14"></polyline>
+          <path d="M3.05 11a9 9 0 0 1 .5-2m-.5 2H6m-3 0V8"></path>
+        </svg>
+      </button>
+
+      <!-- App Title (center) -->
+      <h1 class="header-title">CALCULATOR</h1>
+
+      <!-- Theme Toggle Button (right) -->
+      <button id="themeToggleBtn" class="header-btn theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+        <!-- Sun Icon (Dark Mode active) -->
+        <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5" fill="currentColor"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <!-- Moon Icon (Light Mode active) -->
+        <svg id="moonIcon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"></path>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Calculator Display Screen -->
+    <div id="calculatorDisplay" class="display-container">
+      <div class="display-top-bar">
+        <div class="display-indicators">
+          <span id="angleModeIndicator" class="indicator-badge" title="Click to toggle DEG/RAD/GRAD">DEG</span>
+          <span id="secondIndicator" class="indicator-badge active" style="display: none;">2nd</span>
+          <span id="memoryIndicator" class="indicator-badge active" style="display: none;">M</span>
+        </div>
+        <div id="displayExpression" class="display-expression"></div>
+      </div>
+      <div class="display-main-row">
+        <div id="displayValue" class="display-value">0</div>
+      </div>
+    </div>
+
+    <!-- Mode Selector Navigation Tabs -->
+    <nav class="nav-tabs" aria-label="Calculator Modes">
+      <button class="nav-tab-btn active" data-tab="basic">Basic</button>
+      <button class="nav-tab-btn" data-tab="scientific">Scientific</button>
+      <button class="nav-tab-btn" data-tab="unit">Unit</button>
+      <button class="nav-tab-btn" data-tab="graph">Graph</button>
+    </nav>
+
+    <!-- ==========================================
+         VIEW 1: BASIC CALCULATOR (Image 1)
+         ========================================== -->
+    <section id="viewBasic" class="view-panel active">
+      <div class="basic-keypad">
+        <!-- Row 1 -->
+        <button class="calc-btn btn-red" data-calc-action="clear">AC</button>
+        <button class="calc-btn" data-calc-action="backspace" title="Backspace" aria-label="Backspace">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+            <line x1="18" y1="9" x2="12" y2="15"></line>
+            <line x1="12" y1="9" x2="18" y2="15"></line>
+          </svg>
+        </button>
+        <button class="calc-btn" data-calc-action="percent">%</button>
+        <button class="calc-btn btn-blue" data-calc-action="operator" data-val="÷">÷</button>
+
+        <!-- Row 2 -->
+        <button class="calc-btn" data-calc-action="digit" data-val="7">7</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="8">8</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="9">9</button>
+        <button class="calc-btn btn-blue" data-calc-action="operator" data-val="×">×</button>
+
+        <!-- Row 3 -->
+        <button class="calc-btn" data-calc-action="digit" data-val="4">4</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="5">5</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="6">6</button>
+        <button class="calc-btn btn-blue" data-calc-action="operator" data-val="-">-</button>
+
+        <!-- Row 4 -->
+        <button class="calc-btn" data-calc-action="digit" data-val="1">1</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="2">2</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="3">3</button>
+        <button class="calc-btn btn-blue" data-calc-action="operator" data-val="+">+</button>
+
+        <!-- Row 5 -->
+        <button class="calc-btn span-2" data-calc-action="digit" data-val="0">0</button>
+        <button class="calc-btn" data-calc-action="decimal">.</button>
+        <button class="calc-btn" data-calc-action="sign">±</button>
+
+        <!-- Row 6: Prominent Equal Button -->
+        <button class="calc-btn btn-green span-2" data-calc-action="equal">=</button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 2: SCIENTIFIC CALCULATOR (Image 3)
+         ========================================== -->
+    <section id="viewScientific" class="view-panel">
+      <!-- Scientific Functions Grid (5 columns) -->
+      <div class="scientific-section">
+        <!-- Row S1: Memory & Angle -->
+        <button class="calc-btn" data-calc-action="mc">MC</button>
+        <button class="calc-btn" data-calc-action="mr">MR</button>
+        <button class="calc-btn" data-calc-action="m+">M+</button>
+        <button class="calc-btn" data-calc-action="m-">M-</button>
+        <button class="calc-btn" data-calc-action="drg">DRG</button>
+
+        <!-- Row S2: 2nd, Trig, Log -->
+        <button id="btn2nd" class="calc-btn" data-calc-action="2nd">2nd</button>
+        <button id="btnSin" class="calc-btn" data-calc-action="sci" data-val="sin">sin</button>
+        <button id="btnCos" class="calc-btn" data-calc-action="sci" data-val="cos">cos</button>
+        <button id="btnTan" class="calc-btn" data-calc-action="sci" data-val="tan">tan</button>
+        <button id="btnLog" class="calc-btn" data-calc-action="sci" data-val="log">log</button>
+
+        <!-- Row S3: Root, Power, Constants, Parens -->
+        <button id="btnSqrt" class="calc-btn" data-calc-action="sci" data-val="sqrt">√</button>
+        <button id="btnSquare" class="calc-btn" data-calc-action="sci" data-val="square">x²</button>
+        <button class="calc-btn" data-calc-action="sci" data-val="pi">π</button>
+        <button class="calc-btn" data-calc-action="sci" data-val="e">e</button>
+        <button class="calc-btn" data-calc-action="paren" data-val="(">(</button>
+
+        <!-- Row S4: Parens, Cube, Factorial, Ln, Power -->
+        <button class="calc-btn" data-calc-action="paren" data-val=")">)</button>
+        <button class="calc-btn" data-calc-action="sci" data-val="cube">x³</button>
+        <button class="calc-btn" data-calc-action="sci" data-val="factorial">x!</button>
+        <button id="btnLn" class="calc-btn" data-calc-action="sci" data-val="ln">ln</button>
+        <button class="calc-btn" data-calc-action="sci" data-val="pow">^</button>
+      </div>
+
+      <!-- Standard Keypad Below Scientific Grid -->
+      <div class="basic-keypad">
+        <!-- Row 1 -->
+        <button class="calc-btn btn-red" data-calc-action="clear">AC</button>
+        <button class="calc-btn" data-calc-action="backspace" title="Backspace" aria-label="Backspace">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+            <line x1="18" y1="9" x2="12" y2="15"></line>
+            <line x1="12" y1="9" x2="18" y2="15"></line>
+          </svg>
+        </button>
+        <button class="calc-btn" data-calc-action="percent">%</button>
+        <button class="calc-btn btn-blue" data-calc-action="operator" data-val="÷">÷</button>
+
+        <!-- Row 2 -->
+        <button class="calc-btn" data-calc-action="digit" data-val="7">7</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="8">8</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="9">9</button>
+        <button class="calc-btn btn-blue" data-calc-action="operator" data-val="×">×</button>
+
+        <!-- Row 3 -->
+        <button class="calc-btn" data-calc-action="digit" data-val="4">4</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="5">5</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="6">6</button>
+        <button class="calc-btn btn-blue" data-calc-action="operator" data-val="-">-</button>
+
+        <!-- Row 4 -->
+        <button class="calc-btn" data-calc-action="digit" data-val="1">1</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="2">2</button>
+        <button class="calc-btn" data-calc-action="digit" data-val="3">3</button>
+        <button class="calc-btn btn-blue" data-calc-action="operator" data-val="+">+</button>
+
+        <!-- Row 5 -->
+        <button class="calc-btn span-2" data-calc-action="digit" data-val="0">0</button>
+        <button class="calc-btn" data-calc-action="decimal">.</button>
+        <button class="calc-btn" data-calc-action="sign">±</button>
+
+        <!-- Row 6 -->
+        <button class="calc-btn btn-green span-2" data-calc-action="equal">=</button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 3: UNIT CONVERTER (Image 2)
+         ========================================== -->
+    <section id="viewUnit" class="view-panel unit-view">
+      <!-- Category Dropdown Selector -->
+      <div class="unit-category-select-wrapper">
+        <select id="unitCategorySelect" class="custom-select">
+          <option value="Length" selected>Length</option>
+          <option value="Mass">Mass</option>
+          <option value="Temperature">Temperature</option>
+          <option value="Area">Area</option>
+          <option value="Volume">Volume</option>
+          <option value="Speed">Speed</option>
+          <option value="Time">Time</option>
+          <option value="Digital">Digital Storage</option>
+          <option value="Pressure">Pressure</option>
+          <option value="Energy">Energy</option>
+        </select>
+        <span class="select-arrow">&#9662;</span>
+      </div>
+
+      <!-- Unit Card 1 -->
+      <div class="unit-card">
+        <input type="text" id="unitInput1" class="unit-input" value="0">
+        <div style="position: relative;">
+          <select id="unitPicker1" class="unit-select-picker"></select>
+          <span class="select-arrow" style="right: 8px; font-size: 0.7rem;">&#9662;</span>
+        </div>
+      </div>
+
+      <!-- Swap Units Button -->
+      <button id="unitSwapBtn" class="unit-swap-btn" title="Swap Units" aria-label="Swap Units">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="7 10 12 5 17 10"></polyline>
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="17 14 12 19 7 14"></polyline>
+        </svg>
+      </button>
+
+      <!-- Unit Card 2 -->
+      <div class="unit-card">
+        <input type="text" id="unitInput2" class="unit-input" value="0">
+        <div style="position: relative;">
+          <select id="unitPicker2" class="unit-select-picker"></select>
+          <span class="select-arrow" style="right: 8px; font-size: 0.7rem;">&#9662;</span>
+        </div>
+      </div>
+
+      <!-- Numeric Keypad for Unit Converter -->
+      <div class="unit-keypad">
+        <button class="calc-btn" data-unit-action="digit" data-val="7">7</button>
+        <button class="calc-btn" data-unit-action="digit" data-val="8">8</button>
+        <button class="calc-btn" data-unit-action="digit" data-val="9">9</button>
+
+        <button class="calc-btn" data-unit-action="digit" data-val="4">4</button>
+        <button class="calc-btn" data-unit-action="digit" data-val="5">5</button>
+        <button class="calc-btn" data-unit-action="digit" data-val="6">6</button>
+
+        <button class="calc-btn" data-unit-action="digit" data-val="1">1</button>
+        <button class="calc-btn" data-unit-action="digit" data-val="2">2</button>
+        <button class="calc-btn" data-unit-action="digit" data-val="3">3</button>
+
+        <button class="calc-btn btn-red" data-unit-action="clear">C</button>
+        <button class="calc-btn" data-unit-action="digit" data-val="0">0</button>
+        <button class="calc-btn" data-unit-action="decimal">.</button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 4: GRAPHING CALCULATOR (Image 4 & 6)
+         ========================================== -->
+    <section id="viewGraph" class="view-panel graph-view">
+      <!-- Function Inputs List -->
+      <div id="graphFunctionsList" class="graph-functions-list">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Navigation & View Toolbar (+, -, ←, →, ↑, ↓, ↺, T) -->
+      <div class="graph-nav-toolbar">
+        <button id="graphZoomIn" class="graph-tool-btn" title="Zoom In">+</button>
+        <button id="graphZoomOut" class="graph-tool-btn" title="Zoom Out">-</button>
+        <button id="graphPanLeft" class="graph-tool-btn" title="Pan Left">&larr;</button>
+        <button id="graphPanRight" class="graph-tool-btn" title="Pan Right">&rarr;</button>
+        <button id="graphPanUp" class="graph-tool-btn" title="Pan Up">&uarr;</button>
+        <button id="graphPanDown" class="graph-tool-btn" title="Pan Down">&darr;</button>
+        <button id="graphReset" class="graph-tool-btn" title="Reset View">&#8635;</button>
+        <button id="graphTableBtn" class="graph-tool-btn" title="Table of Values">T</button>
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="graph-actions-row">
+        <button id="btnAddFunction" class="graph-action-btn btn-add-func">+ Add Function</button>
+        <button id="btnPlot" class="graph-action-btn btn-plot">Plot</button>
+      </div>
+
+      <!-- Graph Canvas Container -->
+      <div class="graph-canvas-container">
+        <canvas id="graphCanvas"></canvas>
+        <div id="canvasCoords" class="canvas-coords-tooltip"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==========================================
+       CALCULATION HISTORY DRAWER (Image 5)
+       ========================================== -->
+  <div id="historyDrawerOverlay" class="history-drawer-overlay"></div>
+  <aside id="historyDrawer" class="history-drawer" aria-label="Calculation History">
+    <div class="history-header">
+      <h2 class="history-title">Calculation History</h2>
+      <button id="historyCloseBtn" class="history-close-btn" aria-label="Close History">&times;</button>
+    </div>
+    <div id="historyList" class="history-list">
+      <!-- Rendered dynamically -->
+    </div>
+    <div class="history-footer">
+      <button id="clearHistoryBtn" class="clear-history-btn">Clear History</button>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       TABLE OF VALUES MODAL ('T' Button)
+       ========================================== -->
+  <div id="tableModalOverlay" class="table-modal-overlay">
+    <div class="table-modal">
+      <div class="table-modal-header">
+        <h3 class="table-modal-title">Table of Values</h3>
+        <button id="tableModalClose" class="history-close-btn">&times;</button>
+      </div>
+      <div class="table-config-row">
+        <label>Start: <input type="number" id="tableStart" class="table-config-input" value="-5"></label>
+        <label>End: <input type="number" id="tableEnd" class="table-config-input" value="5"></label>
+        <label>Step: <input type="number" id="tableStep" class="table-config-input" value="1" min="0.1" step="0.5"></label>
+      </div>
+      <div class="table-container">
+        <table class="values-table">
+          <thead id="valuesTableHead"></thead>
+          <tbody id="valuesTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/calculator.js"></script>
+  <script src="js/unit-converter.js"></script>
+  <script src="js/grapher.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

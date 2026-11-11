@@ -1,0 +1,19 @@
+{
+  "name": "scientific-calculator",
+  "version": "1.0.0",
+  "description": "Scientific Calculator with Unit Converter, Graphing Canvas, and Calculation History",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -l 3000 .",
+    "serve": "python -m http.server 3000"
+  },
+  "keywords": [
+    "calculator",
+    "scientific-calculator",
+    "grapher",
+    "unit-converter",
+    "neumorphic"
+  ],
+  "author": "",
+  "license": "MIT"
+}
